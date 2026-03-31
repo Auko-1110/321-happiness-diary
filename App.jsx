@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Heart, Sparkles, Sun, Moon, Battery, CalendarHeart, Smile, Frown, Meh, BookOpen, Coffee, Briefcase, Edit2, Trash2, Search, Download, BarChart3, TrendingUp, Calendar, Image as ImageIcon, PhotoAlbum, X } from 'lucide-react';
+import { Heart, Sparkles, Sun, Moon, Battery, CalendarHeart, Smile, Frown, Meh, BookOpen, Coffee, Briefcase, Edit2, Trash2, Search, Download, BarChart3, TrendingUp, Calendar, Image as ImageIcon, Images, X } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell, PieChart, Pie, Legend } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -287,7 +287,6 @@ export default function DreamDiary() {
 
   return (
     <div className={`min-h-screen ${bgClass} font-sans selection:bg-pink-200 transition-colors duration-300 relative`}>
-      {/* 柔和装饰 */}
       {!darkMode && (
         <>
           <div className="fixed w-[500px] h-[500px] rounded-full bg-pink-100/40 -top-64 -left-64 blur-3xl -z-10"></div>
@@ -296,7 +295,6 @@ export default function DreamDiary() {
         </>
       )}
 
-      {/* 顶部 */}
       <header className={`${darkMode ? 'bg-gray-800/70 border-gray-700' : 'bg-white/70 border-pink-100'} backdrop-blur-md border-b shadow-sm sticky top-0 z-50 transition-colors`}>
         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
@@ -340,7 +338,6 @@ export default function DreamDiary() {
 
       <main className="max-w-6xl mx-auto px-4 py-8">
         <AnimatePresence mode="wait">
-          {/* ---------- 写日记 ---------- */}
           {activeTab === 'write' && (
             <motion.div 
               key="write"
@@ -358,7 +355,6 @@ export default function DreamDiary() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-6">
-                  {/* 日期 + 快速选择 */}
                   <div className={`${cardClass} rounded-3xl p-6 border`}>
                     <label className="block text-sm font-bold mb-3 flex items-center gap-2 text-blue-500">
                       <Calendar size={18} /> 选择日期
@@ -382,10 +378,9 @@ export default function DreamDiary() {
                     </div>
                   </div>
 
-                  {/* 日历标记 */}
                   <div className={`${cardClass} rounded-3xl p-6 border`}>
                     <label className="block text-sm font-bold mb-3 flex items-center gap-2 text-green-500">
-                      <PhotoAlbum size={18} /> 已记录日期
+                      <Images size={18} /> 已记录日期
                     </label>
                     <div className="grid grid-cols-7 gap-1 text-xs">
                       {['日', '一', '二', '三', '四', '五', '六'].map(d => (
@@ -409,7 +404,6 @@ export default function DreamDiary() {
                     </div>
                   </div>
 
-                  {/* 心情 */}
                   <div className={`${cardClass} rounded-3xl p-6 border`}>
                     <label className="block text-sm font-bold mb-3 flex items-center gap-2 text-pink-500">
                       <Smile size={18} /> 今日心情
@@ -434,7 +428,6 @@ export default function DreamDiary() {
                     </div>
                   </div>
 
-                  {/* 能量 */}
                   <div className={`${cardClass} rounded-3xl p-6 border`}>
                     <label className="block text-sm font-bold mb-3 flex items-center gap-2 text-yellow-500">
                       <Battery size={18} /> 能量小电池: {energy}
@@ -449,7 +442,6 @@ export default function DreamDiary() {
                     </div>
                   </div>
 
-                  {/* 标签 */}
                   <div className={`${cardClass} rounded-3xl p-6 border`}>
                     <label className="block text-sm font-bold mb-3 flex items-center gap-2 text-purple-500">
                       <CalendarHeart size={18} /> 生活碎片
@@ -472,9 +464,7 @@ export default function DreamDiary() {
                   </div>
                 </div>
 
-                {/* 右侧表单 */}
                 <div className="space-y-6 md:col-span-2">
-                  {/* 图片上传 */}
                   <div className={`${cardClass} rounded-3xl p-6 border`}>
                     <label className="block text-lg font-bold text-indigo-500 mb-2 flex items-center gap-2">
                       <ImageIcon size={20} /> 今日纪念照片
@@ -511,7 +501,6 @@ export default function DreamDiary() {
                     )}
                   </div>
 
-                  {/* 3件幸福 */}
                   <div className={`${cardClass} rounded-3xl p-6 border relative overflow-hidden`}>
                     <div className="absolute top-0 right-0 w-20 h-20 bg-pink-50 rounded-bl-full -z-10"></div>
                     <label className="block text-lg font-bold text-pink-500 mb-2 flex items-center gap-2">
@@ -526,7 +515,6 @@ export default function DreamDiary() {
                     />
                   </div>
 
-                  {/* 2件感恩 */}
                   <div className={`${cardClass} rounded-3xl p-6 border relative overflow-hidden`}>
                     <div className="absolute top-0 right-0 w-20 h-20 bg-yellow-50 rounded-bl-full -z-10"></div>
                     <label className="block text-lg font-bold text-yellow-500 mb-2 flex items-center gap-2">
@@ -541,7 +529,6 @@ export default function DreamDiary() {
                     />
                   </div>
 
-                  {/* 1件成长 */}
                   <div className={`${cardClass} rounded-3xl p-6 border relative overflow-hidden`}>
                     <div className="absolute top-0 right-0 w-20 h-20 bg-green-50 rounded-bl-full -z-10"></div>
                     <label className="block text-lg font-bold text-green-500 mb-2 flex items-center gap-2">
@@ -556,7 +543,6 @@ export default function DreamDiary() {
                     />
                   </div>
 
-                  {/* 碎碎念 */}
                   <div className={`${cardClass} rounded-3xl p-6 border`}>
                     <label className="block text-lg font-bold mb-2 flex items-center gap-2 text-gray-600">
                       💬 小碎碎念
@@ -598,7 +584,6 @@ export default function DreamDiary() {
             </motion.div>
           )}
 
-          {/* ---------- 数据统计 ---------- */}
           {activeTab === 'dashboard' && (
             <motion.div 
               key="dashboard"
@@ -648,7 +633,6 @@ export default function DreamDiary() {
                 </div>
               </div>
 
-              {/* 统计卡片 */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className={`${cardClass} p-6 rounded-3xl flex items-center gap-4`}>
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl bg-pink-100">✨</div>
@@ -680,7 +664,6 @@ export default function DreamDiary() {
                 </div>
               </div>
 
-              {/* 图表 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {energyData.length > 0 && (
                   <div className={`${cardClass} p-6 rounded-3xl border`}>
@@ -774,7 +757,6 @@ export default function DreamDiary() {
                 )}
               </div>
 
-              {/* 记录列表 */}
               <div>
                 <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-700">
                   <Sparkles className="text-yellow-400" /> 幸福时刻集合 ({filteredEntries.length})
@@ -835,7 +817,6 @@ export default function DreamDiary() {
             </motion.div>
           )}
 
-          {/* ---------- 回忆相册 ---------- */}
           {activeTab === 'album' && (
             <motion.div
               key="album"
@@ -846,7 +827,7 @@ export default function DreamDiary() {
             >
               <div className={`${cardClass} p-6 rounded-3xl text-center`}>
                 <h2 className="text-2xl font-bold text-pink-500 flex items-center justify-center gap-2">
-                  <PhotoAlbum className="text-pink-400" /> 回忆相册
+                  <Images className="text-pink-400" /> 回忆相册
                 </h2>
                 <p className="text-gray-500 mt-1">珍藏每一个闪光瞬间 📸</p>
               </div>
@@ -893,7 +874,6 @@ export default function DreamDiary() {
         </AnimatePresence>
       </main>
 
-      {/* 图片查看弹窗 */}
       {showPhotoModal && previewPhoto && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
           <div className="relative max-w-3xl max-h-[90vh]">
