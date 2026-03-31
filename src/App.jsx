@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Sparkles, Sun, Moon, Battery, CalendarHeart, Smile, Frown, Meh, BookOpen, Coffee, Briefcase, Edit2, Trash2, Search, Download, BarChart3, TrendingUp } from 'lucide-react';
+import { Heart, Sparkles, Sun, Moon, Battery, CalendarHeart, Smile, Frown, Meh, BookOpen, Coffee, Briefcase, Edit2, Trash2, Search, Download, BarChart3, TrendingUp, Calendar } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell, PieChart, Pie, Legend } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -21,7 +21,9 @@ export default function DreamDiary() {
   const [filterMood, setFilterMood] = useState('');
   const [editingId, setEditingId] = useState(null);
 
-  // 表单状态
+  // 表单状态（新增 selectedDate 用于日期选择）
+  const today = new Date().toISOString().split('T')[0];
+  const [selectedDate, setSelectedDate] = useState(today);
   const [mood, setMood] = useState('开心冒泡');
   const [energy, setEnergy] = useState(7);
   const [tag, setTag] = useState('生活日常');
@@ -46,14 +48,10 @@ export default function DreamDiary() {
     }
   }, []);
 
-  // 保存数据到 LocalStorage
-  const saveToLocalStorage = (data) => {
-    localStorage.setItem('dreamDiaryEntries', JSON.stringify(data));
-  };
-
-  // 编辑记录
+  // 编辑记录时，同步加载日期
   const startEdit = (entry) => {
     setEditingId(entry.id);
+    setSelectedDate(entry.date);
     setMood(entry.mood);
     setEnergy(entry.energy);
     setTag(entry.tag);
@@ -62,6 +60,11 @@ export default function DreamDiary() {
     setGrowth(entry.growth);
     setNotes(entry.notes);
     setActiveTab('write');
+  };
+
+  // 保存数据到 LocalStorage
+  const saveToLocalStorage = (data) => {
+    localStorage.setItem('dreamDiaryEntries', JSON.stringify(data));
   };
 
   // 保存或更新记录
@@ -75,7 +78,7 @@ export default function DreamDiary() {
     if (editingId) {
       newEntries = entries.map(e =>
         e.id === editingId
-          ? { ...e, mood, energy, tag, happiness, gratitude, growth, notes }
+          ? { ...e, date: selectedDate, mood, energy, tag, happiness, gratitude, growth, notes }
           : e
       );
       alert('记录已更新！✨');
@@ -83,7 +86,7 @@ export default function DreamDiary() {
     } else {
       const newEntry = {
         id: Date.now(),
-        date: new Date().toISOString().split('T')[0],
+        date: selectedDate,
         mood,
         energy,
         tag,
@@ -99,6 +102,8 @@ export default function DreamDiary() {
     setEntries(newEntries);
     saveToLocalStorage(newEntries);
 
+    // 重置表单，日期恢复为当天
+    setSelectedDate(today);
     setHappiness('');
     setGratitude('');
     setGrowth('');
@@ -286,6 +291,19 @@ export default function DreamDiary() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-6 md:col-span-1">
+                  {/* 新增：日期选择模块 */}
+                  <div className={`${cardClass} rounded-3xl p-6 shadow-sm border transition-colors`}>
+                    <label className={`block text-sm font-bold mb-3 flex items-center gap-2 ${darkMode ? 'text-blue-400' : 'text-gray-700'}`}>
+                      <Calendar size={18} /> 选择日期
+                    </label>
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      onChange={(e) => setSelectedDate(e.target.value)}
+                      className={`w-full px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-300 ${inputClass} transition-colors`}
+                    />
+                  </div>
+
                   <div className={`${cardClass} rounded-3xl p-6 shadow-sm border transition-colors`}>
                     <label className={`block text-sm font-bold mb-3 flex items-center gap-2 ${darkMode ? 'text-pink-400' : 'text-gray-700'}`}>
                       <Smile size={18} /> 今日心情
@@ -408,6 +426,7 @@ export default function DreamDiary() {
                       <button
                         onClick={() => {
                           setEditingId(null);
+                          setSelectedDate(today);
                           setHappiness('');
                           setGratitude('');
                           setGrowth('');
